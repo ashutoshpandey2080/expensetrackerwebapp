@@ -26,6 +26,16 @@ app.use(morgan("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use(helmet.contentSecurityPolicy({
+  directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"], // Add specific sources if needed
+      styleSrc: ["'self'", "'unsafe-inline'"], // Add specific sources if needed
+      imgSrc: ["'self'", "data:"], // Add specific sources if needed
+      connectSrc: ["'self'"], // Add specific sources if needed
+  }
+}));
+
 // API Routes
 app.use("/api/v1", transactionRoutes);
 app.use("/api/auth", userRoutes);
